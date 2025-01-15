@@ -47,4 +47,7 @@ const styles = StyleSheet.create({
     fontSize: 19,
     color: 'gray',
   },
+  newCss: {
+    color: 'red',
+  }
 });
