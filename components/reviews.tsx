@@ -8,10 +8,10 @@ type Review = {
   rating: number;
 };
 
-export default function Reviews({ review, navigation }: { review: Review, navigation: any }) {
+export default function Reviews({ review, navigation, handleDelete }: { review: Review, navigation: any, handleDelete: (id: string) => void }) {
   // Handle press event (optional, e.g., navigation or interaction)
   const pressHandler = () => {
-    navigation.navigate('ReviewDetails', { reviewData: review } )
+    navigation.navigate('ReviewDetails', { reviewData: review , handleDeleteFunc: handleDelete} )
   };
 
   return (

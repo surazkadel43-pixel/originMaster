@@ -161,6 +161,10 @@ export default function Home({ navigation }: {navigation: any}) {
         });
         
       }
+      const handleDelete = (id: string) => {
+        setReviews((prevReviews) => prevReviews.filter((review) => review.id !== id));
+      };
+      
     
   return (
     <View style={styles.container}>
@@ -200,6 +204,7 @@ export default function Home({ navigation }: {navigation: any}) {
         <Reviews 
         review= {item}
         navigation = {navigation}
+        handleDelete = {handleDelete}
         />
       }
       />
