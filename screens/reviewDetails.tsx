@@ -1,8 +1,11 @@
-import { StyleSheet, Text, View, TouchableOpacity  } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Modal, TouchableWithoutFeedback, Keyboard,   } from 'react-native';
 import { globalStyles } from '../styles/global';
 import CardReviews from '../commonFiles/card';
 import { Button } from 'react-native';
 import { Alert } from 'react-native';
+import { useState } from 'react';
+import { MaterialIcons, FontAwesome, Ionicons } from '@expo/vector-icons';
+import EditForm from '../components/Myform copy';
 // Define the structure of a review object
 type Review = {
     id: string;
@@ -12,19 +15,19 @@ type Review = {
   };
 export default function ReviewDetails({ route, navigation,  }: { route: any | undefined, navigation: any }) {
    
+  const[ modalOpen, setModalOpen] = useState(false)
+
   // Check if route.params exists and has reviewData
   let reviewData: Review = route?.params?.reviewData;
   let handleDeleteFunc: (id: string) => void = route?.params?.handleDeleteFunc;
+  let handleEdit: (id: string, title: string, body: string, rating: number) => void = route?.params?.handelEditFunc;
 
   if(!reviewData){
     reviewData = { id: '', title: '', body: '', rating: 0}
     
   }
   
-  // Edit handler: Navigate to an Edit screen
-  const handleEdit = () => {
-    navigation.navigate('EditReview', { reviewData }); // Ensure 'EditReview' is defined in your navigator
-  };
+ 
 
   // Delete handler: Show confirmation and perform deletion
   const handleDelete = (id: string) => {
@@ -46,12 +49,32 @@ export default function ReviewDetails({ route, navigation,  }: { route: any | un
 
   return (
     <View >
-      {/* Review Details */}
+      
+      <Modal visible= {modalOpen} animationType='slide'>
+        
+        <TouchableWithoutFeedback
+                onPress={() => {
+                  console.log('keybord  dismissed')
+                  Keyboard.dismiss()
+              }}
+          >
+            <View style={globalStyles.container}>
+                <MaterialIcons 
+                    name= 'close'
+                    size={40}
+                    onPress={() => setModalOpen(false)}
+                  />
+                  { <EditForm editReviews = {handleEdit} givenReviews= {reviewData} />  }
+                  
+            </View>
+        </TouchableWithoutFeedback>  
+      </Modal>
+
       <CardReviews review={reviewData} />
 
         {/* Edit and Delete Buttons */}
       <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={handleEdit} style={[styles.button, styles.editButton]}>
+        <TouchableOpacity onPress={() => setModalOpen(true)} style={[styles.button, styles.editButton]}>
           <Text style={styles.buttonText}>Edit</Text>
         </TouchableOpacity>
         <View style={{ marginVertical: 8 }} />

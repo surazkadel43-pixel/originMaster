@@ -165,6 +165,14 @@ export default function Home({ navigation }: {navigation: any}) {
         setReviews((prevReviews) => prevReviews.filter((review) => review.id !== id));
       };
       
+      const editReviews = (id: string, title: string, body: string, rating: number) => {
+        setReviews((prevReviews) =>
+          prevReviews.map((review) =>
+            review.id === id ? { ...review, title, body, rating } : review
+          )
+        );
+      };
+      
     
   return (
     <View style={styles.container}>
@@ -205,6 +213,7 @@ export default function Home({ navigation }: {navigation: any}) {
         review= {item}
         navigation = {navigation}
         handleDelete = {handleDelete}
+        handleEdit = {editReviews }
         />
       }
       />

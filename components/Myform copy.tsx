@@ -10,20 +10,27 @@ import * as  yup from 'yup';
     return parseInt(val) < 6 && parseInt(val) > 0;
   })
  })
+// Define the structure of a review object
+type Review = {
+    id: string;
+    title: string;
+    body: string;
+    rating: number;
+  };
 
-export default function MyForm({addReviews} : {addReviews: (title: string, body: string, rating: number) => void} ) {
+export default function EditForm({editReviews, givenReviews} : {editReviews: (id: string, title: string, body: string, rating: number) => void , givenReviews: Review} ) {
   
 
   return (
     
         <View style= {globalStyles.container}>
             <Formik 
-                initialValues={{title: '', rating: '', body: ''}}
+                initialValues={{title: givenReviews.title, rating: givenReviews.rating.toString(), body: givenReviews.body}}
                 validationSchema={ReviewSchema}
                 onSubmit={(values, actions) => {
                     console.log(values)
                     console.log('values')
-                    addReviews(values.title, values.body, parseInt(values.rating)) 
+                    editReviews(givenReviews.id, values.title, values.body, parseInt(values.rating)) 
                     actions.resetForm()
                     
                 }}
