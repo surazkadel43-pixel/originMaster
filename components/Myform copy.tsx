@@ -18,7 +18,7 @@ type Review = {
     rating: number;
   };
 
-export default function EditForm({editReviews, givenReviews} : {editReviews: (id: string, title: string, body: string, rating: number) => void , givenReviews: Review} ) {
+export default function EditForm({editReviews, givenReviews, } : {editReviews: (id: string, title: string, body: string, rating: number) => void , givenReviews: Review,} ) {
   
 
   return (
@@ -31,6 +31,7 @@ export default function EditForm({editReviews, givenReviews} : {editReviews: (id
                     console.log(values)
                     console.log('values')
                     editReviews(givenReviews.id, values.title, values.body, parseInt(values.rating)) 
+                    
                     actions.resetForm()
                     
                 }}

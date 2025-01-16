@@ -169,8 +169,12 @@ export default function Home({ navigation }: {navigation: any}) {
         setReviews((prevReviews) =>
           prevReviews.map((review) =>
             review.id === id ? { ...review, title, body, rating } : review
+             
           )
+          
         );
+
+        navigation.goBack();
       };
       
     
