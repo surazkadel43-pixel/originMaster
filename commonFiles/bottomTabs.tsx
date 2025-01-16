@@ -8,7 +8,7 @@ type Review = {
   rating: number;
 };
 
-export default function CardReviews({ review, navigation }: { review: Review, navigation?: any }) {
+export default function CardReviews({ review, navigation }: { review: Review, navigation: any }) {
   
   if(!review){
     review = { id: '', title: '', body: '', rating: 0}

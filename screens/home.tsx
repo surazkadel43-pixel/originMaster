@@ -213,7 +213,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 20,
+    marginBottom: 2,
   },
   textStyle: {
     fontFamily: 'roboto-regular'

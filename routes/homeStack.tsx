@@ -4,6 +4,7 @@ import Home from '../screens/home';
 import ReviewDetails from '../screens/reviewDetails';
 import NavigationHeader from '../commonFiles/navigationHeader';
 
+
 const Stack = createStackNavigator();
 
 export default function HomeScreens({ navigation }: {navigation: any}) {
@@ -38,6 +39,7 @@ export default function HomeScreens({ navigation }: {navigation: any}) {
         component={ReviewDetails}
         
       />
+      
     </Stack.Navigator>
   );
 }

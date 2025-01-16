@@ -5,6 +5,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { MaterialIcons, FontAwesome, Ionicons } from '@expo/vector-icons';
 import AboutScreens from './aboutStack';
 import HomeScreens from './homeStack';
+import BottomTabs from './bottom';
 
 const RootDrawerNavigator = createDrawerNavigator();
 
@@ -14,7 +15,7 @@ export default function Drawer() {
   
     return (
       <NavigationContainer>
-        <RootDrawerNavigator.Navigator initialRouteName="HomeScreens"
+        <RootDrawerNavigator.Navigator initialRouteName="BottomTabs"
         screenOptions={{
             headerShown: false
         }}
@@ -34,6 +35,14 @@ export default function Drawer() {
             ),
           }}
           />
+          <RootDrawerNavigator.Screen name="BottomTabs" component={BottomTabs} 
+          options={{
+            drawerIcon: ({ color, size }) => (
+              <FontAwesome name="info-circle" color={color} size={size} />
+            ),
+          }}
+          />
+          
           
           
         </RootDrawerNavigator.Navigator>
