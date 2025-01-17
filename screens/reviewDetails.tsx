@@ -39,9 +39,11 @@ export default function ReviewDetails({ route, navigation,  }: { route: any | un
         { text: 'Delete', style: 'destructive', onPress: () => deleteReview(id) },
       ]
     );
+   
   };
   // Function to delete the review (placeholder for your deletion logic)
   const deleteReview = (id: string) => {
+    
     handleDeleteFunc(id)
     console.log('Review deleted:', reviewData.id);
     navigation.goBack(); // Go back to the previous screen after deletion
@@ -78,7 +80,7 @@ export default function ReviewDetails({ route, navigation,  }: { route: any | un
           <Text style={styles.buttonText}>Edit</Text>
         </TouchableOpacity>
         <View style={{ marginVertical: 8 }} />
-        <TouchableOpacity onPress={() =>handleDelete(reviewData.id)} style={[styles.button, styles.deleteButton]}>
+        <TouchableOpacity onPress={() => handleDelete(reviewData.id)} style={[styles.button, styles.deleteButton]}>
           <Text style={styles.buttonText}>Delete</Text>
         </TouchableOpacity>
       </View>

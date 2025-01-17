@@ -15,7 +15,7 @@ export default function BottomTabs({ navigation }: {navigation: any}){
      
             <Tab.Navigator
             screenOptions={ {
-                tabBarLabelPosition: "below-icon",
+                tabBarLabelPosition: "beside-icon",
                 tabBarShowLabel: true,
                 tabBarActiveTintColor: 'purple',
                 //tabBarInactiveTintColor: 'grey',
@@ -39,7 +39,7 @@ export default function BottomTabs({ navigation }: {navigation: any}){
                  
                 }}
                 />
-                <Tab.Screen name="ReviewDetails" component={ReviewDetails}/>
+                
             </Tab.Navigator>
       
     )

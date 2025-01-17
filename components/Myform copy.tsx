@@ -10,6 +10,8 @@ import * as  yup from 'yup';
     return parseInt(val) < 6 && parseInt(val) > 0;
   })
  })
+
+ 
 // Define the structure of a review object
 type Review = {
     id: string;
