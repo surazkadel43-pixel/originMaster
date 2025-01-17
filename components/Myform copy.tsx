@@ -32,7 +32,7 @@ export default function EditForm({editReviews, givenReviews, } : {editReviews: (
                     console.log('values')
                     editReviews(givenReviews.id, values.title, values.body, parseInt(values.rating)) 
                     
-                    actions.resetForm()
+                    
                     
                 }}
             >
