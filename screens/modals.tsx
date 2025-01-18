@@ -1,9 +1,18 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, Modal, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, Modal, StyleSheet, Button, ActivityIndicator, Dimensions } from 'react-native';
+import * as Progress from 'react-native-progress';
+
 
 const EditDeleteExample = () => {
   const [modalVisible, setModalVisible] = useState(false);
 
+  const [loading, setLoading] = useState(false);
+  const [progress, setProgress] = useState(0);
+
+    const increaseProgress = () => {
+        setProgress((prev) => (prev + 0.1 > 1 ? 0 : prev + 0.1));
+        setLoading((prev) => !prev);
+    };
   const handleEdit = () => {
     // Handle Edit action
     console.log("Edit clicked");
@@ -18,6 +27,27 @@ const EditDeleteExample = () => {
 
   return (
     <View style={styles.container}>
+
+            {/* Circular Progress */}
+            <Progress.Circle 
+                size={100} 
+                progress={progress} 
+                showsText={true} 
+                color="blue" 
+            />
+
+            {/* Linear Progress */}
+            <Progress.Bar 
+                progress={progress} 
+                width={200} 
+                color="green" 
+                style={{margin: 10}}
+            />
+            {/* Display the ActivityIndicator */}
+            {loading && <ActivityIndicator size="large" color="green" />}
+
+            <Button title="Increase Progress" onPress={increaseProgress} />
+
       <TouchableOpacity
         style={styles.threeDotButton}
         onPress={() => setModalVisible(!modalVisible)}
