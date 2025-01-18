@@ -10,8 +10,8 @@ import * as  yup from 'yup';
     return parseInt(val) < 6 && parseInt(val) > 0;
   })
  })
+// to run the server   npx json-server --watch data/db.json --port 8000
 
- 
 // Define the structure of a review object
 type Review = {
     id: string;

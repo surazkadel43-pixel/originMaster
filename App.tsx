@@ -25,17 +25,19 @@ export default function App() {
   useEffect(() => {
     // Keep the splash screen visible while the fonts are loading
     SplashScreen.preventAutoHideAsync();
-
+ 
+    setFontsLoaded(true)
     // Load fonts
     getFonts()
       .then(() => {
+        console.log(fontsLoaded)
         setFontsLoaded(true); // Set fonts as loaded
         SplashScreen.hideAsync(); // Hide the splash screen
       })
       .catch((error) => {
         console.error('Error loading fonts', error);
       });
-  }, []);
+  }, [fontsLoaded]);
 
   if (!fontsLoaded) {
     return null; // Optionally, return a loading screen or a blank screen here

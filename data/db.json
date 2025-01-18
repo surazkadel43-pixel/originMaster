@@ -16,13 +16,13 @@
         "id": "3",
         "title": "Amazing experience!",
         "body": "This product exceeded my expectations! Highly recommend it to others.",
-        "rating": 5
+        "rating": 3
       },
       {
         "id": "4",
         "title": "Okay for the price",
         "body": "It’s good for the price, but there are better options out there.",
-        "rating": 3
+        "rating": 4
       },
       {
         "id": "5",
@@ -64,7 +64,7 @@
         "id": "11",
         "title": "Not worth it",
         "body": "I regret buying this. It doesn’t live up to the description.",
-        "rating": 1
+        "rating": 3
       },
       {
         "id": "12",

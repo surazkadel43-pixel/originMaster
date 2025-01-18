@@ -6,6 +6,7 @@ import { MaterialIcons, FontAwesome, Ionicons } from '@expo/vector-icons';
 import MyForm from '../components/Myform';
 import useFetch from '../api/useFetch';
 
+
 // Define the structure of a review object
 type Review = {
     id: string;
@@ -13,12 +14,12 @@ type Review = {
     body: string;
     rating: number;
   };
-
+// to run the server npx json-server --watch data/db.json --port 8000
 export default function Home({ navigation }: {navigation: any}) {
 
   //const {reviews, isPending, error} = useFetch("http://10.0.2.2:8000/reviews");
 
-  let reriews = [
+  let Reriews = [
     {
       id: '1',
       title: 'Great Product!',
@@ -143,12 +144,18 @@ export default function Home({ navigation }: {navigation: any}) {
     //Initialize the reviews state with an array of review objects
     const [reviews, setReviews] = useState<Review[]>([]);
     const[isPending, setIsPending] = useState(true)
-     const[name, setName] = useState('suraj')
-     const[ modalOpen, setModalOpen] = useState(false)
+    const[name, setName] = useState('suraj')
+    const[ modalOpen, setModalOpen] = useState(false)
     const [error, setError] = useState(null)
 
+    const newPromise = new Promise((resolve, reject) => {
+
+    });
+   
+    const pathFolder = '../data/db';
       useEffect(() =>
         {
+          
           setTimeout(() => 
             {
               console.log(name)
@@ -170,6 +177,8 @@ export default function Home({ navigation }: {navigation: any}) {
                     console.log(err.message)
                   })
             }, 1000);
+
+            
         },[name]);
 
       const addReviews = (title: string, body: string, rating: number) => {
@@ -208,8 +217,28 @@ export default function Home({ navigation }: {navigation: any}) {
         navigation.goBack();
       };
       
-      
-    
+      const getReviews = async () => {
+
+        
+        const  response = await fetch('http://10.0.2.2:8000/reviews')
+        
+        if(response.status !== 200){
+          throw new Error(`HTTP error! Status: ${response.status}`)
+        }
+        const data = await response.json()
+        return data;
+      }
+
+      const allReviews = getReviews()
+          .then((data) => {
+             setReviews(data)
+             setIsPending(false)  
+             setError(null)  })
+          .catch((error) => { 
+             setError(error)
+             setIsPending(false)})
+             
+      //console.log(allReviews)
   return (
     <View style={styles.container}>
 
@@ -286,3 +315,4 @@ const styles = StyleSheet.create({
     zIndex: 1,
 }
 });
+
