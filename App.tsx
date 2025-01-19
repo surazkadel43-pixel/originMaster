@@ -6,7 +6,7 @@ import * as SplashScreen from 'expo-splash-screen';
 
 import Screens from './routes/homeStack';
 import Drawer from './routes/drawer';
-
+import BottomTabs from './routes/bottom';
 const getFonts = () =>{
   return Font.loadAsync({
     'roboto-bold': require('./assets/fonts/Roboto-Bold.ttf'),
@@ -45,7 +45,7 @@ export default function App() {
 
 
     return (
-      <Drawer />
+      <BottomTabs />
     );
   
   

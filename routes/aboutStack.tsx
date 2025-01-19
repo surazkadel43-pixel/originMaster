@@ -20,9 +20,10 @@ export default function AboutScreens({ navigation }: {navigation: any}) {
                     headerStyle: { backgroundColor: '#eee' , height: 100, width: '80%', },
                     headerRight: () => (
                       <Pressable
-                        onPress={() => alert('menu item pressed')}
+                        onPress={() => {alert('menu item pressed'); }}
                         style={({ pressed }) => ({
-                          //paddingLeft: 0,
+                          marginRight : 10,
+                          borderWidth: 2,
                           opacity: pressed ? 0.5 : 1,
                         })}
                       >

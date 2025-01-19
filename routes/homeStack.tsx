@@ -10,6 +10,10 @@ const Stack = createStackNavigator();
 export default function HomeScreens({ navigation }: {navigation: any}) {
   //let reviewData: any = { id: '', title: '', body: '', rating: 0}
 
+  let num = navigation.getState().routes.length;
+  console.log("number of screens",num)
+
+
   useEffect(() => {
     const state = navigation.getState();
     const numberOfScreens = state.routes.length;

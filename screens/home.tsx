@@ -179,7 +179,7 @@ export default function Home({ navigation }: {navigation: any}) {
             }, 1000);
 
             
-        },[name]);
+        },[]);
 
       const addReviews = (title: string, body: string, rating: number) => {
         console.log(reviews.length)
@@ -217,28 +217,30 @@ export default function Home({ navigation }: {navigation: any}) {
         navigation.goBack();
       };
       
-      const getReviews = async () => {
+      // const getReviews = async () => {
 
         
-        const  response = await fetch('http://10.0.2.2:8000/reviews')
+      //   const  response = await fetch('http://10.0.2.2:8000/reviews')
         
-        if(response.status !== 200){
-          throw new Error(`HTTP error! Status: ${response.status}`)
-        }
-        const data = await response.json()
-        return data;
-      }
+      //   if(response.status !== 200){
+      //     throw new Error(`HTTP error! Status: ${response.status}`)
+      //   }
+      //   const data = await response.json()
+      //   return data;
+      // }
 
-      const allReviews = getReviews()
-          .then((data) => {
-             setReviews(data)
-             setIsPending(false)  
-             setError(null)  })
-          .catch((error) => { 
-             setError(error)
-             setIsPending(false)})
+      // const allReviews = getReviews()
+      //     .then((data) => {
+      //        setReviews(data)
+      //        setIsPending(false)  
+      //        setError(null)  })
+      //     .catch((error) => { 
+      //        setError(error)
+      //        setIsPending(false)})
              
       //console.log(allReviews)
+
+
   return (
     <View style={styles.container}>
 

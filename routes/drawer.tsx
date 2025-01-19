@@ -14,10 +14,15 @@ export default function Drawer() {
   
   
     return (
-      <NavigationContainer>
-        <RootDrawerNavigator.Navigator initialRouteName="BottomTabs"
+      
+        <RootDrawerNavigator.Navigator initialRouteName="HomeScreens"
         screenOptions={{
-            headerShown: false
+            headerShown: false,
+            drawerActiveTintColor: 'red',
+            drawerInactiveTintColor: 'purple',
+            drawerStyle: {
+              backgroundColor: 'white'
+            }
         }}
         >
 
@@ -31,22 +36,16 @@ export default function Drawer() {
           <RootDrawerNavigator.Screen name="AboutScreens" component={AboutScreens} 
           options={{
             drawerIcon: ({ color, size }) => (
-              <FontAwesome name="info-circle" color={color} size={size} />
+              <MaterialIcons name="info" color={color} size={size} />
             ),
           }}
           />
-          <RootDrawerNavigator.Screen name="BottomTabs" component={BottomTabs} 
-          options={{
-            drawerIcon: ({ color, size }) => (
-              <FontAwesome name="info-circle" color={color} size={size} />
-            ),
-          }}
-          />
+          
           
           
           
         </RootDrawerNavigator.Navigator>
-      </NavigationContainer>
+      
     );
   }
   

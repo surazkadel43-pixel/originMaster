@@ -56,7 +56,7 @@ const EditDeleteExample = () => {
       </TouchableOpacity>
 
       
-      {modalVisible && (
+      {modalVisible && 
         <View style={styles.dropdown}>
           <TouchableOpacity
             style={styles.option}
@@ -72,7 +72,7 @@ const EditDeleteExample = () => {
             <Text style={styles.deleteText}>Delete</Text>
           </TouchableOpacity>
         </View>
-      )}
+      }
     </View>
   );
 };
