@@ -14,6 +14,8 @@ import * as  yup from 'yup';
 export default function MyForm({addReviews} : {addReviews: (title: string, body: string, rating: number) => void} ) {
   
 
+
+
   return (
     
         <View style= {globalStyles.container}>

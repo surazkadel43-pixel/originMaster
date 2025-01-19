@@ -31,7 +31,7 @@ export default function NavigationHeader({ title, navigation }: { title: string,
 
          <MaterialIcons name="menu" size={24} style={styles.icon} onPress={() => navigation.openDrawer()} />
             <View  style ={styles.headerView} >
-                <Image source={require('../assets/favicon.png')} style= {{alignItems: 'stretch'}}  />
+                <Image source={require('../assets/favicon.png')} style= {{alignItems: 'center'}}  />
                 <Text style = {globalStyles.textStyle}> {title} </Text>
             </View>
 

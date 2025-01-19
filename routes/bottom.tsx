@@ -5,7 +5,7 @@ import Drawer from './drawer';
 import modals from '../screens/modals';
 import { MaterialIcons, FontAwesome, Ionicons } from '@expo/vector-icons';
 import { Directions } from 'react-native-gesture-handler';
-import MyForm from '../components/Myform';
+import Game from '../screens/gameScreens';
 
 const Tab =  createBottomTabNavigator();
 
@@ -27,7 +27,7 @@ export default function BottomTabs(){
                     
                   },
             }}
-            initialRouteName="Home"
+            initialRouteName="Game"
             >
 
               <Tab.Screen name="Home" component={Drawer}
@@ -50,9 +50,9 @@ export default function BottomTabs(){
                  
                 }}
                 />
-                <Tab.Screen name="ReviewDetails" component={ReviewDetails}
+                <Tab.Screen name="Game" component={Game}  
                 options={{
-                    headerShown: false,
+                    headerShown: true,
                     tabBarIcon: ({ color, size }) => (
                         <MaterialIcons name="article" color={color} size={size} />
                       ),

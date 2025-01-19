@@ -197,7 +197,7 @@ export default function Home({ navigation }: {navigation: any}) {
           let newReviews: Review[] = [...initialValues]
           newReviews.push(userReviews)
          
-          return newReviews;
+          return [userReviews, ...initialValues];
         });
         
       }

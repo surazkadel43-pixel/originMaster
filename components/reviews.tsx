@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   rating: {
-    fontSize: 14,
-    color: 'gray',
+    fontSize: 16,
+    color: 'blue',
   },
 });
