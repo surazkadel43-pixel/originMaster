@@ -13,7 +13,7 @@ type Review = {
     body: string;
     rating: number;
   };
-export default function ReviewDetails({ route, navigation,  }: { route: any | undefined, navigation: any }) {
+export default function ReviewDetails({ route, navigation  }: { route: any | undefined, navigation: any }) {
    
   const[ modalOpen, setModalOpen] = useState(false)
 
