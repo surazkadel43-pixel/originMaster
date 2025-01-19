@@ -1,6 +1,6 @@
-import { StyleSheet, Text, View, FlatList, TouchableOpacity, Modal, TouchableWithoutFeedback , Keyboard} from 'react-native';
+import { StyleSheet, Text, View, FlatList, TouchableOpacity, Modal, TouchableWithoutFeedback , Keyboard, Alert} from 'react-native';
 import { globalStyles } from '../styles/global';
-import { useState, useEffect } from 'react';
+import { useState, useEffect,  } from 'react';
 import Reviews from '../components/reviews';
 import { MaterialIcons, FontAwesome, Ionicons } from '@expo/vector-icons';
 import MyForm from '../components/Myform';
@@ -103,9 +103,14 @@ export default function Game({ navigation }: {navigation: any}) {
 
           // Check if the sum matches the target
             if (newSum === target) {
-                // Here, you can perform actions like showing a win message or triggering a win event
-                alert('You won! Target reached!');
-                pressHandler();
+                Alert.alert(
+                      'Hurray',
+                      'You Won. Best of Luck?',
+                      [
+                        
+                        { text: 'Ok', style: 'destructive', onPress: () => pressHandler() },
+                      ]
+                    );
             }
         return newIndices;
         //return prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index] 
