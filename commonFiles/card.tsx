@@ -19,7 +19,7 @@ export default function CardReviews({ review, navigation }: { review: Review, na
       <View style={styles.reviewItem}>
         <Text style={styles.reviewTitle}>{review.title}</Text>
         <Text style={[globalStyles.textStyle]}>{review.body}</Text>
-        <Text style={styles.rating}>Rating: {review.rating} / 5</Text>
+        <Text style={styles.rating}> Rating: {review.rating} / 5</Text>
       </View>
     </View>
     
@@ -45,6 +45,6 @@ const styles = StyleSheet.create({
   },
   rating: {
     fontSize: 19,
-    color: 'gray',
+    color: 'red',
   },
 });

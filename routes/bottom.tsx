@@ -50,7 +50,7 @@ export default function BottomTabs(){
                  
                 }}
                 />
-                <Tab.Screen name="ReviewDetails" component={ReviewDetails}
+                <Tab.Screen name="ReviewDetails" component={ReviewDetails}  
                 options={{
                     headerShown: false,
                     tabBarIcon: ({ color, size }) => (
