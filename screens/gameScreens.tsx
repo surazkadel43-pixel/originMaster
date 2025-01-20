@@ -1,12 +1,12 @@
 import { StyleSheet, Text, View, FlatList, TouchableOpacity, Modal, TouchableWithoutFeedback , Keyboard, Alert} from 'react-native';
 import { globalStyles } from '../styles/global';
-import { useState, useEffect,  } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Reviews from '../components/reviews';
 import { MaterialIcons, FontAwesome, Ionicons } from '@expo/vector-icons';
 import MyForm from '../components/Myform';
 import useFetch from '../api/useFetch';
 import { Timestamp } from 'react-native-reanimated/lib/typescript/commonTypes';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute, useFocusEffect } from '@react-navigation/native';
 
 // Define the structure of a review object
 type Review = {
@@ -31,34 +31,35 @@ export default function Game({ navigation }: {navigation: any}) {
   const [numbers, setNumbers] = useState<number[]>(Array.from({ length: 6 }, () => Math.floor(Math.random() * 29) + 1)); // Numbers to choose from
   const [time, setTime] = useState<number>(10); // Countdown timer
   
-  if (route.name === 'Game') {
-  // Effect to handle countdown and game logic
-  useEffect(() => {
-    
-      // Run only when you're on the 'Game' screen
+  
+   // The effect that runs when the Game screen comes into focus
+   useFocusEffect(
+    useCallback(() => {
       const timeout = setTimeout(() => {
-        setTime((time) => {
-          if (time <= 0) {
+        setTime((prevTime) => {
+          if (prevTime <= 0) {
             Alert.alert(
               'Sorry',
               'You Lost. Best of Luck Next time?',
-              [{ text: 'Ok', style: 'destructive', onPress: () => pressHandler() }]
+              [{ text: 'Ok', style: 'destructive', onPress: pressHandler }]
             );
             return 0; // Ensure time doesn't go below 0
           }
-          return time - 1; // Decrease time
+          return prevTime - 1; // Decrease time
         });
       }, 1000);
-      
-      return () => clearTimeout(timeout); // Cleanup on component unmount
-    
-  }, [time, route.name]); // Depend on 'time' and 'route.name' to ensure effect runs only when 'Game' page is active
 
-}
-  // Effect to log the target (for debugging)
+      // Cleanup timeout when the screen goes out of focus or time changes
+      return () => clearTimeout(timeout);
+
+    }, [time]) // Depend on 'time' so it runs each time 'time' changes
+  );
+
   useEffect(() => {
-    console.log(target, 'from use effect');
-  }, [target]);
+    if (route.name === 'Game') {
+      setTime(10); // Reset time if entering the 'Game' screen (optional, for initial state)
+    }
+  }, [route.name]); // Only reset time when route changes
 
   const pressHandler = () => {
       const newTarget = 10 + Math.floor(50 * Math.random()); // Generate a new target
@@ -122,6 +123,7 @@ export default function Game({ navigation }: {navigation: any}) {
 
   return (
     <View style={styles.container}>
+      
 
         <View style = {styles.targetView}>
             <Text style ={styles.target} >  { target }  </Text>
