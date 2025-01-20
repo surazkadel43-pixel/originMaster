@@ -159,7 +159,7 @@ export default function Home({ navigation }: {navigation: any}) {
           setTimeout(() => 
             {
               console.log(name)
-              fetch('http://10.0.2.2:8000/reviews').then(res => { 
+              fetch('http://10.0.2.2:3000/reviews').then(res => { 
               
                   if(!res.ok){
                     throw new Error(`HTTP error! Status: ${res.status}`);

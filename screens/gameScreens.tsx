@@ -5,7 +5,8 @@ import Reviews from '../components/reviews';
 import { MaterialIcons, FontAwesome, Ionicons } from '@expo/vector-icons';
 import MyForm from '../components/Myform';
 import useFetch from '../api/useFetch';
-
+import { Timestamp } from 'react-native-reanimated/lib/typescript/commonTypes';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 // Define the structure of a review object
 type Review = {
@@ -17,111 +18,105 @@ type Review = {
 // to run the server npx json-server --watch data/db.json --port 8000
 export default function Game({ navigation }: {navigation: any}) {
 
+  const route = useRoute();
+  const nav = useNavigation();
+  //console.log('Current route name:', route.name);  // Logs the name of the current route
+
+  // Random target number
+  let randomNumber = 20 + Math.floor(50 * Math.random());
   
-    let randomNumber = 20 +  Math.floor(50 * Math.random())
-
-    const [target, setTarget] = useState(randomNumber)
-      // State to track clicked items
-  const [clickedIndices, setClickedIndices] = useState<number[]>([]);
-
-  const [sum, setSum] = useState<number>(0)
-    // State to hold six random numbers
-  const [numbers, setNumbers] = useState<number[]>(
-    Array.from({ length: 6 }, () => Math.floor(Math.random() * 29) + 1)
-  );
+  const [target, setTarget] = useState(randomNumber); // Target number
+  const [clickedIndices, setClickedIndices] = useState<number[]>([]); // Indices of clicked numbers
+  const [sum, setSum] = useState<number>(0); // Sum of selected numbers
+  const [numbers, setNumbers] = useState<number[]>(Array.from({ length: 6 }, () => Math.floor(Math.random() * 29) + 1)); // Numbers to choose from
+  const [time, setTime] = useState<number>(10); // Countdown timer
   
-
-
-
-   useEffect( () => {
-        console.log(target,'from use effect')
-   },[target])
-        
-   const pressHandler = () => {
-    const newTarget = 10 + Math.floor(50 * Math.random()); // Generate a new target
-    setTarget(newTarget); // Update target state
-  
-    let guaranteedSum: number[] = [];
-    let remainingTarget = newTarget;
-  
-    // Step 1: Generate a valid combination that adds up to the target
-    while (remainingTarget > 0) {
-      const nextNumber = Math.min(
-        Math.floor(Math.random() * remainingTarget) + 1,
-        remainingTarget
-      );
-      guaranteedSum.push(nextNumber);
-      remainingTarget -= nextNumber;
-    }
-  
-    // Step 2: Fill remaining spots with random numbers if there are any slots left
-    const remainingNumbers = Array.from({ length: 6 - guaranteedSum.length }, () =>
-      Math.floor(20 * Math.random()) + 1
-    );
-  
-    // Combine the valid numbers and the remaining random numbers
-    const allNumbers = [...guaranteedSum, ...remainingNumbers];
-  
-    // Step 3: Shuffle the numbers so the valid combination isn't predictable
-    for (let i = allNumbers.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [allNumbers[i], allNumbers[j]] = [allNumbers[j], allNumbers[i]];
-    }
-  
-    setNumbers(allNumbers); // Update numbers state
-    setClickedIndices([]); // Clear clicked indices
-    setSum(0)
-  };
-  
-            
-   const onNumberPress = (index: number, value: number) => {
-
-    setClickedIndices((prev) =>
-       { 
-        let newIndices: number[] = []
-        let newSum = sum;
-        if(prev.includes(index)){
-            // Remove the value from the sum if it was already clicked
-            newSum -= value;
-
-            prev.forEach(value => {
-                if(value !== index){
-                    newIndices.push(value)
-                }
-            });
-
-        }
-        else{
-            // Add the value to the sum if it's clicked now
-             newSum += value;
-            newIndices = [...prev, index]
-        }
-
-        console.log(newIndices)
-        // Update the sum state after modifying the clicked numbers
-         setSum(newSum);
-
-          // Check if the sum matches the target
-            if (newSum === target) {
-                Alert.alert(
-                      'Hurray',
-                      'You Won. Best of Luck?',
-                      [
-                        
-                        { text: 'Ok', style: 'destructive', onPress: () => pressHandler() },
-                      ]
-                    );
-            }
-        return newIndices;
-        //return prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index] 
-
-       } 
-      );
-
-
+  if (route.name === 'Game') {
+  // Effect to handle countdown and game logic
+  useEffect(() => {
+    
+      // Run only when you're on the 'Game' screen
+      const timeout = setTimeout(() => {
+        setTime((time) => {
+          if (time <= 0) {
+            Alert.alert(
+              'Sorry',
+              'You Lost. Best of Luck Next time?',
+              [{ text: 'Ok', style: 'destructive', onPress: () => pressHandler() }]
+            );
+            return 0; // Ensure time doesn't go below 0
+          }
+          return time - 1; // Decrease time
+        });
+      }, 1000);
       
+      return () => clearTimeout(timeout); // Cleanup on component unmount
+    
+  }, [time, route.name]); // Depend on 'time' and 'route.name' to ensure effect runs only when 'Game' page is active
 
-   }
+}
+  // Effect to log the target (for debugging)
+  useEffect(() => {
+    console.log(target, 'from use effect');
+  }, [target]);
+
+  const pressHandler = () => {
+      const newTarget = 10 + Math.floor(50 * Math.random()); // Generate a new target
+      setTarget(newTarget);
+
+      let guaranteedSum: number[] = [];
+      let remainingTarget = newTarget;
+
+      // Generate a valid combination that adds up to the target
+      while (remainingTarget > 0) {
+        const nextNumber = Math.min(Math.floor(Math.random() * remainingTarget) + 1, remainingTarget);
+        guaranteedSum.push(nextNumber);
+        remainingTarget -= nextNumber;
+      }
+
+      // Fill remaining spots with random numbers
+      const remainingNumbers = Array.from({ length: 6 - guaranteedSum.length }, () => Math.floor(20 * Math.random()) + 1);
+
+      // Combine and shuffle the numbers
+      const allNumbers = [...guaranteedSum, ...remainingNumbers];
+      for (let i = allNumbers.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [allNumbers[i], allNumbers[j]] = [allNumbers[j], allNumbers[i]];
+      }
+
+      setNumbers(allNumbers); // Update numbers state
+      setClickedIndices([]); // Reset clicked indices
+      setSum(0); // Reset sum
+      setTime(10); // Reset timer
+  };
+
+  const onNumberPress = (index: number, value: number) => {
+    setClickedIndices((prev) => {
+      let newIndices: number[] = [];
+      let newSum = sum;
+
+      if (prev.includes(index)) {
+        newSum -= value; // Remove value from sum if clicked again
+        newIndices = prev.filter((i) => i !== index); // Remove from clicked indices
+      } else {
+        newSum += value; // Add value to sum if clicked
+        newIndices = [...prev, index]; // Add to clicked indices
+      }
+
+      // Check if sum matches target
+      if (newSum === target) {
+        Alert.alert(
+          'Hurray',
+          'You Won. Best of Luck?',
+          [{ text: 'Ok', style: 'destructive', onPress: () => pressHandler() }]
+        );
+        setTime(1000); // Reset timer when won
+      }
+
+      setSum(newSum); // Update sum
+      return newIndices; // Return new clicked indices
+    });
+  };
 
    
 
@@ -133,11 +128,16 @@ export default function Game({ navigation }: {navigation: any}) {
 
             <TouchableOpacity style={styles.button} onPress={pressHandler}>
 
-                <Text> ClickHere </Text>
+                <Text style={{fontSize: 20}}> New Game </Text>
                 
             </TouchableOpacity>
 
-            <Text style ={styles.sum} > Sum:  { sum }  </Text>
+            <Text style ={styles.sum} > Sum:{ sum }  </Text>
+        </View>
+
+        <View >
+
+        <Text style ={styles.sum} > Time:{ time }  </Text>
         </View>
 
      
@@ -170,11 +170,12 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     backgroundColor: '#fff',
     alignItems: 'flex-start',
-    justifyContent: 'space-around',
+    justifyContent: 'space-evenly',
     marginBottom: 2,
+
   },
  target: {
-    fontSize: 40,
+    fontSize: 50,
     backgroundColor: '#aaa',
     marginHorizontal: 50,
     textAlign: 'center'
@@ -206,7 +207,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
  },
  targetChoose: {
-    fontSize: 30,
+    fontSize: 50,
     backgroundColor: '#aaa',
     margin: 20,
     textAlign: 'center',
@@ -219,10 +220,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'red', // Light blue background for clicked items
   },
   sum: {
-    fontSize: 20,
+    fontSize: 30,
     backgroundColor: '#aaa',
     marginHorizontal: 20,
-    textAlign: 'center'
+    textAlign: 'center',
+    
   }
 
 });
